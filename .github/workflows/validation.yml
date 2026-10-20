@@ -1,0 +1,23 @@
+name: Deployment Verification CI
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Validate Shell Script
+        run: |
+          echo "Checking update.sh syntax..."
+          bash -n update.sh
+          echo "Syntax check passed!"
+
+      - name: Verify HTML Generated
+        run: |
+          test -f index.html && echo "index.html exists and is ready for deployment!"
+
